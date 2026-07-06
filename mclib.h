@@ -91,7 +91,7 @@
 #define lpushv(list, ...)                                            \
     do {                                                             \
         typeof((list).items[0]) _tmp[] = { __VA_ARGS__ };             \
-        for (u64 _pushv_iter = 0; _i < sizeof(_tmp)/sizeof(_tmp[0]); _pushv_iter++)\
+        for (u64 _pushv_iter = 0; _pushv_iter < sizeof(_tmp)/sizeof(_tmp[0]); _pushv_iter++)\
             lpush((list), _tmp[_pushv_iter]);                                  \
     } while (0)
 

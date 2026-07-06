@@ -38,8 +38,16 @@ void test_list0(list(Test)* tests){
     lpush(*tests, test("list0", points.count == 2));
 }
 
+void test_list1(list(Test)* tests){
+    list(Point) points = lcreate(Point, 3);
+    lpushv(points, point(1, 2, "A"), point(4, -7, "B")); 
+    
+    lpush(*tests, test("list1", points.count == 2));
+}
+
 void test_lists(list(Test)* tests){
     test_list0(tests);
+    test_list1(tests);
 }
 
 
