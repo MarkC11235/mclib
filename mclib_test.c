@@ -1,5 +1,6 @@
 #include "mclib.h"
 
+// Testing Stuff ====================
 typedef struct {
     const char* testname;
     bool pass;
@@ -19,15 +20,34 @@ void print_test_report(list(Test) tests){
     );
 }
 
-void test_lpush(list(Test)* tests){
-    lpush(*tests, test("lpush", true));
+// List Tests ========================
+
+typedef struct {
+    int x;
+    int y;
+    const char* name;
+} Point;
+def_list(Point);
+#define point(_x, _y, _name) (Point){.x = (_x), .y = (_y), .name = (_name)}
+
+void test_list0(list(Test)* tests){
+    list(Point) points = lcreate(Point, 3);
+    lpush(points, point(1, 2, "A")); 
+    lpush(points, point(-4, 5, "B")); 
+    
+    lpush(*tests, test("list0", points.count == 2));
 }
+
+void test_lists(list(Test)* tests){
+    test_list0(tests);
+}
+
 
 int main(){
     list(Test) tests = lcreate(Test, 10); 
     printf("Running Tests...\n\n");
     
-    test_lpush(&tests);
+    test_lists(&tests);
 
     printf("Tests Complete.\n");
     print_test_report(tests);
