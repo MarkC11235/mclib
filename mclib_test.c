@@ -30,24 +30,53 @@ typedef struct {
 def_list(Point);
 #define point(_x, _y, _name) (Point){.x = (_x), .y = (_y), .name = (_name)}
 
-void test_list0(list(Test)* tests){
+// Simple push test
+void test_lpush0(list(Test)* tests){
     list(Point) points = lcreate(Point, 3);
     lpush(points, point(1, 2, "A")); 
     lpush(points, point(-4, 5, "B")); 
     
-    lpush(*tests, test("list0", points.count == 2));
+    lpush(*tests, test("lpush0", points.count == 2));
 }
 
-void test_list1(list(Test)* tests){
+// push test with list expansion
+void test_lpush1(list(Test)* tests){
+    list(Point) points = lcreate(Point, 3);
+    lpush(points, point(1, 2, "A")); 
+    lpush(points, point(-4, 5, "B")); 
+    lpush(points, point(-4, 5, "C")); 
+    lpush(points, point(-4, 5, "D")); 
+    
+    lpush(*tests, test("lpush1", points.count == 4));
+}
+
+// simple push vector test 
+void test_lpushv0(list(Test)* tests){
     list(Point) points = lcreate(Point, 3);
     lpushv(points, point(1, 2, "A"), point(4, -7, "B")); 
     
-    lpush(*tests, test("list1", points.count == 2));
+    lpush(*tests, test("lpushv0", points.count == 2));
+}
+
+// push vector test with list expansion
+void test_lpushv1(list(Test)* tests){
+    list(Point) points = lcreate(Point, 3);
+    lpushv(points, 
+            point(1, 2, "A"),
+            point(4, -7, "B"),
+            point(3, -4, "C"),
+            point(-11, 5, "D")
+          ); 
+    
+    lpush(*tests, test("lpushv1", points.count == 4));
 }
 
 void test_lists(list(Test)* tests){
-    test_list0(tests);
-    test_list1(tests);
+    test_lpush0(tests);
+    test_lpush1(tests);
+
+    test_lpushv0(tests);
+    test_lpushv1(tests);
 }
 
 
